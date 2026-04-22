@@ -1,22 +1,29 @@
-# Calculadora de IMC simples
-print("--- Calculadora de Saúde ---")
+import datetime
 
-# Entrada de dados (convertendo o texto para números decimais)
+def salvar_historico(imc, classificacao):
+    data_atual = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    with open("historico_saude.txt", "a") as arquivo:
+        arquivo.write(f"[{data_atual}] IMC: {imc:.2f} - {classificacao}\n")
+    print("\n✓ Resultado salvo com sucesso em 'historico_saude.txt'!")
+
+print("--- Calculadora de Saúde Pro ---")
+
 peso = float(input("Digite seu peso (kg): "))
 altura = float(input("Digite sua altura (m): "))
 
-# Cálculo do IMC
 imc = peso / (altura ** 2)
 
-# Exibindo o resultado com duas casas decimais
-print(f"\nSeu IMC é: {imc:.2f}")
-
-# Estrutura de decisão
 if imc < 18.5:
-    print("Classificação: Abaixo do peso")
+    status = "Abaixo do peso"
 elif 18.5 <= imc < 25:
-    print("Classificação: Peso normal (Saudável)")
+    status = "Peso normal"
 elif 25 <= imc < 30:
-    print("Classificação: Sobrepeso")
+    status = "Sobrepeso"
 else:
-    print("Classificação: Obesidade")
+    status = "Obesidade"
+
+print(f"\nSeu IMC é: {imc:.2f}")
+print(f"Classificação: {status}")
+
+# Nova Funcionalidade: Salvar os dados
+salvar_historico(imc, status)
